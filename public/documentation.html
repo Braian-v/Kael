@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation | Kael</title>
+  <meta name="description" content="Official documentation for Kael. Learn how to self-host, configure, and use your personal AI WhatsApp assistant.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Documentation | Kael">
+  <meta property="og:description" content="Official documentation for Kael. Learn how to self-host, configure, and use your personal AI WhatsApp assistant.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation | Kael">
+  <meta name="twitter:description" content="Learn how to self-host and configure your Kael instance.">
+
+  <!-- Add your own favicon files here, e.g. /assets/favicon/favicon.ico -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"><style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #25D366;
+      --green-dark: #128C7E;
+      --green-light: #DCF8C6;
+      --green-muted: #e8faf0;
+      --bg: #ffffff;
+      --bg-2: #f7f8f9;
+      --text-1: #0d1117;
+      --text-2: #4b5563;
+      --text-3: #9ca3af;
+      --border: #e5e7eb;
+      --sidebar-w: 260px;
+      --header-h: 58px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    }
+
+    html { scroll-behavior: smooth; font-size: 15px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-1);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER */
+    .doc-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      z-index: 200;
+      gap: 1rem;
+    }
+
+    .doc-header-logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--text-1);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .doc-header-logo .dot {
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    .doc-header-divider {
+      width: 1px; height: 20px;
+      background: var(--border);
+    }
+
+    .doc-header-title {
+      font-size: 0.85rem;
+      color: var(--text-3);
+      font-weight: 400;
+    }
+
+    .doc-header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .doc-header-right a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .doc-header-right a:hover { background: var(--bg-2); color: var(--text-1); }
+
+    .doc-header-right .github-btn {
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* LAYOUT */
+    .doc-layout {
+      display: flex;
+      margin-top: var(--header-h);
+      min-height: calc(100vh - var(--header-h));
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      padding: 0 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-links { list-style: none; }
+
+    .sidebar-links a {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-2);
+      text-decoration: none;
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      transition: background 0.12s, color 0.12s;
+      line-height: 1.4;
+    }
+
+    .sidebar-links a:hover { background: var(--bg-2); color: var(--text-1); }
+    .sidebar-links a.active { background: var(--green-muted); color: var(--green-dark); font-weight: 500; }
+
+    /* CONTENT */
+    .doc-content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+      padding: 3rem 4rem 6rem;
+      max-width: 860px;
+    }
+
+    /* Typography */
+    .doc-content h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      color: var(--text-1);
+    }
+
+    .doc-content h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text-1);
+      margin-top: 3rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doc-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .doc-content p {
+      font-size: 0.93rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .doc-content ul, .doc-content ol {
+      padding-left: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .doc-content li {
+      font-size: 0.93rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 0.25rem;
+    }
+
+    .doc-content a {
+      color: var(--green-dark);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(18,140,126,0.3);
+      transition: border-color 0.15s;
+    }
+
+    .doc-content a:hover { border-color: var(--green-dark); }
+
+    /* Lead paragraph */
+    .lead {
+      font-size: 1.05rem !important;
+      color: var(--text-2) !important;
+      line-height: 1.7 !important;
+      margin-bottom: 2rem !important;
+    }
+
+    /* Callouts */
+    .callout {
+      border-left: 3px solid var(--green);
+      background: var(--green-muted);
+      padding: 0.875rem 1.1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .callout-warn {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .callout-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .callout-warn .callout-title { color: #92400e; }
+
+    .callout p {
+      font-size: 0.875rem !important;
+      color: var(--text-2) !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* Code */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: #c0392b;
+    }
+
+    pre {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      position: relative;
+    }
+
+    pre code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: none;
+      border: none;
+      padding: 0;
+      color: #e6edf3;
+      line-height: 1.65;
+    }
+
+    .pre-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8b949e;
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+    }
+
+    .code-comment { color: #6a737d; }
+    .code-key { color: #79c0ff; }
+    .code-str { color: #a5d6ff; }
+    .code-kw { color: #ff7b72; }
+    .code-green { color: #3fb950; }
+
+    /* Table */
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .doc-table th {
+      background: var(--bg-2);
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doc-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .doc-table td code { font-size: 0.78rem; }
+
+    .badge-required {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* Nav between pages */
+    .doc-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .doc-nav a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.875rem 1.25rem;
+      text-decoration: none !important;
+      border-bottom-color: var(--border) !important;
+      transition: border-color 0.15s, background 0.15s;
+      max-width: 260px;
+    }
+
+    .doc-nav a:hover { border-color: var(--green) !important; background: var(--green-muted); }
+    .doc-nav-dir { font-size: 0.72rem; color: var(--text-3); }
+    .doc-nav-title { font-size: 0.9rem; font-weight: 600; color: var(--text-1); }
+
+    /* Sections */
+    .doc-section { margin-bottom: 1rem; scroll-margin-top: 80px; }
+
+    /* Feature grid in docs */
+    .feat-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .feat-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+
+    .feat-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .feat-item-desc {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .doc-content { margin-left: 0; padding: 2rem 1.5rem 4rem; }
+      .doc-header { padding: 0 1rem; }
+      .feat-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="doc-header">
+    <a href="/" class="doc-header-logo">
+      <span class="dot"></span>
+      Kael
+    </a>
+    <div class="doc-header-divider"></div>
+    <span class="doc-header-title">Documentation</span>
+    <div class="doc-header-right">
+      <a href="/">Home</a>
+      <a href="/status">Status</a>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Getting started</div>
+        <ul class="sidebar-links">
+          <li><a href="#introduction" class="active">Introduction</a></li>
+          <li><a href="#prerequisites">Prerequisites</a></li>
+          <li><a href="#quickstart">Quick start</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Configuration</div>
+        <ul class="sidebar-links">
+          <li><a href="#env-vars">Environment variables</a></li>
+          <li><a href="#database">Database setup</a></li>
+          <li><a href="#meta-webhook">Meta webhook</a></li>
+          <li><a href="#templates">Message Templates</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Features</div>
+        <ul class="sidebar-links">
+          <li><a href="#reminders">Reminders</a></li>
+          <li><a href="#routines">Daily routines</a></li>
+          <li><a href="#interval-reminders">Interval reminders</a></li>
+          <li><a href="#recurring">Weekly &amp; monthly</a></li>
+          <li><a href="#edit-task">Edit &amp; undo</a></li>
+          <li><a href="#memory">Conversational memory</a></li>
+          <li><a href="#events">Birthdays &amp; events</a></li>
+          <li><a href="#contacts">Contacts &amp; messaging</a></li>
+          <li><a href="#search">Web search</a></li>
+          <li><a href="#delete">Deleting tasks</a></li>
+          <li><a href="#chat">Conversational chat</a></li>
+          <li><a href="#media">Media handling</a></li>
+          <li><a href="#snooze">Snooze a reminder</a></li>
+          <li><a href="#notes">Notes</a></li>
+          <li><a href="#lists">Lists</a></li>
+          <li><a href="#finance">Finance tracking</a></li>
+          <li><a href="#daily-summary">Daily summary</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Deployment</div>
+        <ul class="sidebar-links">
+          <li><a href="#render">Deploy to Render</a></li>
+          <li><a href="#keepalive">Keep-alive setup</a></li>
+          <li><a href="#testing">Testing locally</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Reference</div>
+        <ul class="sidebar-links">
+          <li><a href="#ai-waterfall">AI waterfall</a></li>
+          <li><a href="#api-endpoints">API endpoints</a></li>
+          <li><a href="#limits">Usage limits</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+        </ul>
+      </div>
+
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="doc-content">
+
+      <!-- INTRODUCTION -->
+      <div class="doc-section" id="introduction">
+        <h1>Introduction</h1>
+        <p class="lead">Kael is a personal AI assistant that operates entirely inside WhatsApp. Send a message in plain English — she understands your intent, executes the action, and responds instantly. No app to install, no account to create beyond your existing WhatsApp.</p>
+
+        <p>Kael is self-hosted. You run your own instance on Render, connect it to your own Meta WhatsApp Business account, and the only data that touches a third-party service is your API calls to Gemini, Groq, and your Supabase database.</p>
+
+        <div class="callout">
+          <div class="callout-title">Who this is for</div>
+          <p>Kael is designed for a single owner — you. It is not a multi-tenant service. All personal data (reminders, contacts, events) is private to the WhatsApp number you configure as <code>MY_PHONE_NUMBER</code>.</p>
+        </div>
+
+        <h3>What Kael can do in v1.1.1</h3>
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-item-title">⏰ Reminders</div><div class="feat-item-desc">One-off reminders at a specific time or on a future date. Vague times like "morning" or "evening" are resolved automatically.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🔁 Daily Routines</div><div class="feat-item-desc">Recurring tasks at a fixed time, every day indefinitely.</div></div>
+          <div class="feat-item"><div class="feat-item-title">📅 Weekly &amp; Monthly Recurring</div><div class="feat-item-desc">Reminders on a specific day of the week or day of the month — every Tuesday, the 1st of every month, etc.</div></div>
+          <div class="feat-item"><div class="feat-item-title">✏️ Edit &amp; Undo</div><div class="feat-item-desc">Correct the last reminder with a follow-up — "Actually make that 6 PM" updates it in place.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🧠 Conversational Memory</div><div class="feat-item-desc">Kael remembers the last 8 messages, enabling natural follow-up questions without repeating context.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🎂 Birthdays &amp; Events</div><div class="feat-item-desc">Save once, get reminded every year with advance alerts.</div></div>
+          <div class="feat-item"><div class="feat-item-title">📇 Contacts &amp; Messaging</div><div class="feat-item-desc">Save contacts and forward messages by name.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🔍 Web Search</div><div class="feat-item-desc">Real-time web search via Tavily with Serper fallback. Results formatted for WhatsApp.</div></div>
+          <div class="feat-item"><div class="feat-item-title">💬 Conversational AI</div><div class="feat-item-desc">4-tier AI waterfall for general questions and chat.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🗑 Delete Tasks</div><div class="feat-item-desc">Delete any reminder, routine, recurring task, or event by name.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🎤 Media Handling</div><div class="feat-item-desc">Voice notes, images, and other media get a clear "text only" reply instead of silently failing.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🩺 Health Tracking</div><div class="feat-item-desc">Visual 90-day uptime history with downtime detection (Red/Green) and "Last Run" tracking for all background jobs.</div></div>
+          <div class="feat-item"><div class="feat-item-title">⚡️ Keep-Alive</div><div class="feat-item-desc">External cron trigger (<code>/api/tick</code>) called every minute by cron-job.org ensures reminders fire even after a cold restart. Self-ping every 4 minutes as secondary keep-alive.</div></div>
+          <div class="feat-item"><div class="feat-item-title">🔒 Webhook Security</div><div class="feat-item-desc">Verifies Meta's <code>X-Hub-Signature-256</code> on every incoming webhook. Per-user rate limiting (10 messages/minute) protects AI quota from abuse.</div></div>
+        </div>
+      </div>
+
+      <!-- PREREQUISITES -->
+      <div class="doc-section" id="prerequisites">
+        <h2>Prerequisites</h2>
+        <p>Before you start, create accounts on these services. All free tiers are sufficient.</p>
+
+        <table class="doc-table">
+          <thead><tr><th>Service</th><th>What it's for</th><th>Link</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Meta for Developers</strong></td><td>WhatsApp Business API — sending and receiving messages</td><td><a href="https://developers.facebook.com" target="_blank">developers.facebook.com</a></td></tr>
+            <tr><td><strong>Supabase</strong></td><td>PostgreSQL database — stores all your reminders, contacts, events</td><td><a href="https://supabase.com" target="_blank">supabase.com</a></td></tr>
+            <tr><td><strong>Google AI Studio</strong></td><td>Gemini API key (Tier 1 &amp; 2 AI)</td><td><a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a></td></tr>
+            <tr><td><strong>Groq</strong></td><td>Llama 3 API key (Tier 3 AI fallback)</td><td><a href="https://console.groq.com" target="_blank">console.groq.com</a></td></tr>
+            <tr><td><strong>OpenRouter</strong></td><td>GPT-4o-mini (Tier 4 AI fallback — minimal paid usage)</td><td><a href="https://openrouter.ai" target="_blank">openrouter.ai</a></td></tr>
+            <tr><td><strong>Tavily</strong></td><td>Web search (primary)</td><td><a href="https://www.tavily.com" target="_blank">tavily.com</a></td></tr>
+            <tr><td><strong>Serper</strong></td><td>Web search fallback</td><td><a href="https://serper.dev" target="_blank">serper.dev</a></td></tr>
+            <tr><td><strong>Render</strong></td><td>Hosting — free web service tier</td><td><a href="https://render.com" target="_blank">render.com</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- QUICKSTART -->
+      <div class="doc-section" id="quickstart">
+        <h2>Quick start</h2>
+        <h3>1. Clone your repo</h3>
+        <pre><code><span class="code-green">git clone</span> &lt;your-repo-url&gt;
+<span class="code-green">cd</span> kael-whatsapp-assistant
+<span class="code-green">npm install</span></code></pre>
+
+        <h3>2. Copy the environment file</h3>
+        <pre><code><span class="code-green">cp</span> .env.example .env</code></pre>
+        <p>Open <code>.env</code> and fill in all required keys. See <a href="#env-vars">Environment variables</a> for the full list.</p>
+
+        <h3>3. Set up the database</h3>
+        <p>In your Supabase project, open the <strong>SQL Editor</strong> and run the full schema. See <a href="#database">Database setup</a>.</p>
+
+        <h3>4. Run locally</h3>
+        <pre><code><span class="code-green">npm run dev</span></code></pre>
+        <p>The server starts on <code>http://localhost:3000</code>. Your dashboard is at <code>http://localhost:3000/status</code>.</p>
+
+        <h3>5. Run the test suite</h3>
+        <pre><code><span class="code-green">node test.js</span></code></pre>
+        <p>This validates all v1.1 features against your real Supabase instance and cleans up after itself.</p>
+      </div>
+
+      <!-- ENV VARS -->
+      <div class="doc-section" id="env-vars">
+        <h2>Environment variables</h2>
+        <p>All secrets live in a <code>.env</code> file at the project root. Never commit this file.</p>
+
+        <table class="doc-table">
+          <thead><tr><th>Variable</th><th>Description</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><code>PORT</code></td><td>Port the Express server listens on. Render sets this automatically.</td><td></td></tr>
+            <tr><td><code>VERIFY_TOKEN</code></td><td>Any string you choose. Must match what you set in the Meta webhook config.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>MY_PHONE_NUMBER</code></td><td>Your WhatsApp number in international format, no <code>+</code>. E.g. <code>5493511234567</code></td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>PHONE_NUMBER_ID</code></td><td>From Meta developer console → WhatsApp → API Setup.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>ACCESS_TOKEN</code></td><td>Meta permanent access token. Generate one from the Meta developer portal.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>SUPABASE_URL</code></td><td>Your Supabase project URL. Found in Project Settings → API.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>SUPABASE_KEY</code></td><td>Supabase <code>anon</code> public key. Found in Project Settings → API.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>GEMINI_API_KEY</code></td><td>From <a href="https://aistudio.google.com" target="_blank">Google AI Studio</a>. Used for Tier 1 &amp; 2 AI.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>GROQ_API_KEY</code></td><td>From <a href="https://console.groq.com" target="_blank">Groq console</a>. Used for Tier 3 AI fallback.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>OPENROUTER_API_KEY</code></td><td>From <a href="https://openrouter.ai" target="_blank">OpenRouter</a>. Used for Tier 4 AI fallback.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>TAVILY_API_KEY</code></td><td>From <a href="https://www.tavily.com" target="_blank">Tavily</a>. Primary web search provider.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>SERPER_API_KEY</code></td><td>From <a href="https://serper.dev" target="_blank">Serper.dev</a>. Web search fallback.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>PUBLIC_URL</code></td><td>Your application's public URL (e.g. <code>https://kael.onrender.com</code>). Required for self-ping keep-alive — do not include a trailing slash.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>CRON_SECRET</code></td><td>Any random string. Protects <code>/api/tick</code> from unauthorized calls. Must match what you set in cron-job.org.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>WEBHOOK_APP_SECRET</code></td><td>Your Meta App Secret — Meta Developer Console → App → Settings → Basic → App Secret. Enables <code>X-Hub-Signature-256</code> verification on every incoming webhook. The server refuses to start without it.</td><td><span class="badge-required">required</span></td></tr>
+            <tr><td><code>WHATSAPP_TEMPLATE_NAME</code></td><td>Name of an approved Meta Message Template with a single <code>{{1}}</code> body variable. Lets Kael reach recipients outside the 24h customer-service window (long-term reminders, third-party messages). See <a href="#templates">Message Templates</a>.</td><td><span>optional</span></td></tr>
+            <tr><td><code>WHATSAPP_TEMPLATE_LANG</code></td><td>Language code for the template above. Defaults to <code>es_AR</code>.</td><td><span>optional</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- DATABASE -->
+      <div class="doc-section" id="database">
+        <h2>Database setup</h2>
+        <p>Run this SQL in the Supabase SQL Editor once. It creates all 11 tables from scratch.</p>
+
+        <pre><span class="pre-label">SQL</span><code><span class="code-comment">-- Contacts address book</span>
+<span class="code-kw">CREATE TABLE</span> contacts (
+  id    SERIAL <span class="code-kw">PRIMARY KEY</span>,
+  name  VARCHAR(50) <span class="code-kw">NOT NULL UNIQUE</span>,
+  phone VARCHAR(20) <span class="code-kw">NOT NULL</span>
+);
+
+<span class="code-comment">-- One-off reminders</span>
+<span class="code-kw">CREATE TABLE</span> personal_reminders (
+  id            SERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone         VARCHAR(20) <span class="code-kw">NOT NULL</span>,
+  message       TEXT <span class="code-kw">NOT NULL</span>,
+  reminder_time TIMESTAMP WITH TIME ZONE <span class="code-kw">NOT NULL</span>,
+  group_name    VARCHAR(50),
+  status        VARCHAR(20) <span class="code-kw">DEFAULT</span> <span class="code-str">'pending'</span>,
+  created_at    TIMESTAMP WITH TIME ZONE <span class="code-kw">DEFAULT NOW</span>()
+);
+
+<span class="code-comment">-- Daily routines (time only, fires every day)</span>
+<span class="code-kw">CREATE TABLE</span> daily_routines (
+  id              SERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone           VARCHAR(20) <span class="code-kw">NOT NULL</span>,
+  task_name       TEXT <span class="code-kw">NOT NULL</span>,
+  reminder_time   TIME <span class="code-kw">NOT NULL</span>,
+  is_active       BOOLEAN <span class="code-kw">DEFAULT TRUE</span>,
+  last_fired_date DATE
+);
+
+<span class="code-comment">-- Weekly and monthly recurring tasks</span>
+<span class="code-kw">CREATE TABLE</span> recurring_tasks (
+  id               BIGSERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone            VARCHAR(20) <span class="code-kw">NOT NULL</span>,
+  task_name        TEXT <span class="code-kw">NOT NULL</span>,
+  reminder_time    TIME <span class="code-kw">NOT NULL</span>,
+  recurrence_type  TEXT <span class="code-kw">NOT NULL CHECK</span> (recurrence_type <span class="code-kw">IN</span> (<span class="code-str">'weekly'</span>, <span class="code-str">'monthly'</span>)),
+  day_of_week      INTEGER,
+  day_of_month     INTEGER,
+  is_active        BOOLEAN <span class="code-kw">DEFAULT TRUE</span>,
+  last_fired_date  DATE,
+  created_at       TIMESTAMP WITH TIME ZONE <span class="code-kw">DEFAULT NOW</span>()
+);
+
+<span class="code-comment">-- Birthdays and special events</span>
+<span class="code-kw">CREATE TABLE</span> special_events (
+  id          SERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone       VARCHAR(20) <span class="code-kw">NOT NULL</span>,
+  event_type  VARCHAR(50),
+  person_name VARCHAR(100),
+  event_date  DATE <span class="code-kw">NOT NULL</span>,
+  created_at  TIMESTAMP WITH TIME ZONE <span class="code-kw">DEFAULT NOW</span>()
+);
+
+<span class="code-comment">-- All incoming messages and bot responses (also powers conversational memory)</span>
+<span class="code-kw">CREATE TABLE</span> interaction_logs (
+  id           SERIAL <span class="code-kw">PRIMARY KEY</span>,
+  sender_name  VARCHAR(50),
+  sender_phone VARCHAR(20) <span class="code-kw">NOT NULL</span>,
+  message      TEXT <span class="code-kw">NOT NULL</span>,
+  bot_response TEXT,
+  created_at   TIMESTAMP WITH TIME ZONE <span class="code-kw">DEFAULT NOW</span>()
+);
+
+<span class="code-comment">-- Daily API usage tracking (stores uptime history)</span>
+<span class="code-kw">CREATE TABLE</span> api_usage (
+  usage_date       DATE <span class="code-kw">PRIMARY KEY</span>,
+  gemini_count     INT <span class="code-kw">DEFAULT</span> 0,
+  groq_count       INT <span class="code-kw">DEFAULT</span> 0,
+  openrouter_count INT <span class="code-kw">DEFAULT</span> 0,
+  tavily_count     INT <span class="code-kw">DEFAULT</span> 0,
+  serper_count     INT <span class="code-kw">DEFAULT</span> 0,
+  error_count      INT <span class="code-kw">DEFAULT</span> 0
+);
+
+<span class="code-comment">-- v1.1.1: Background job health tracking</span>
+<span class="code-kw">CREATE TABLE</span> system_jobs (
+    job_name TEXT <span class="code-kw">PRIMARY KEY</span>,
+    last_fired TIMESTAMPTZ,
+    status TEXT <span class="code-kw">DEFAULT</span> <span class="code-str">'active'</span>
+);
+
+<span class="code-kw">INSERT INTO</span> system_jobs (job_name, status)
+<span class="code-kw">VALUES</span>
+    (<span class="code-str">'Reminder Dispatch'</span>, <span class="code-str">'active'</span>),
+    (<span class="code-str">'Routine Dispatch'</span>, <span class="code-str">'active'</span>),
+    (<span class="code-str">'Recurring Task Dispatch'</span>, <span class="code-str">'active'</span>),
+    (<span class="code-str">'Event Alert'</span>, <span class="code-str">'active'</span>),
+    (<span class="code-str">'Daily Summary'</span>, <span class="code-str">'active'</span>)
+<span class="code-kw">ON CONFLICT</span> (job_name) <span class="code-kw">DO NOTHING</span>;
+
+<span class="code-comment">-- Atomic counter increment for api_usage (run once, required for usage tracking)</span>
+<span class="code-kw">CREATE OR REPLACE FUNCTION</span> increment_api_usage(p_date DATE, p_column TEXT)
+<span class="code-kw">RETURNS</span> void
+LANGUAGE plpgsql
+<span class="code-kw">AS</span> $$
+<span class="code-kw">DECLARE</span>
+  col_name TEXT := p_column || <span class="code-str">'_count'</span>;
+<span class="code-kw">BEGIN</span>
+  <span class="code-kw">EXECUTE</span> format(
+    <span class="code-str">'UPDATE api_usage SET %I = COALESCE(%I, 0) + 1 WHERE usage_date = $1'</span>,
+    col_name, col_name
+  ) USING p_date;
+<span class="code-kw">END</span>;
+$$;
+
+<span class="code-comment">-- Fase 3: free-form notes</span>
+<span class="code-kw">CREATE TABLE</span> notes (
+  id          BIGSERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone       TEXT <span class="code-kw">NOT NULL</span>,
+  content     TEXT <span class="code-kw">NOT NULL</span>,
+  created_at  TIMESTAMPTZ <span class="code-kw">DEFAULT NOW</span>()
+);
+<span class="code-kw">CREATE INDEX ON</span> notes (phone);
+
+<span class="code-comment">-- Fase 3: named lists (shopping, todo, etc.)</span>
+<span class="code-kw">CREATE TABLE</span> lists (
+  id          BIGSERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone       TEXT <span class="code-kw">NOT NULL</span>,
+  list_name   TEXT <span class="code-kw">NOT NULL</span>,
+  item        TEXT <span class="code-kw">NOT NULL</span>,
+  is_done     BOOLEAN <span class="code-kw">DEFAULT FALSE</span>,
+  created_at  TIMESTAMPTZ <span class="code-kw">DEFAULT NOW</span>()
+);
+<span class="code-kw">CREATE INDEX ON</span> lists (phone, list_name);
+
+<span class="code-comment">-- Fase 3: income/expense tracking, optionally tagged by business</span>
+<span class="code-kw">CREATE TABLE</span> finance_entries (
+  id            BIGSERIAL <span class="code-kw">PRIMARY KEY</span>,
+  phone         TEXT <span class="code-kw">NOT NULL</span>,
+  entry_type    TEXT <span class="code-kw">NOT NULL CHECK</span> (entry_type <span class="code-kw">IN</span> (<span class="code-str">'income'</span>, <span class="code-str">'expense'</span>)),
+  amount        NUMERIC <span class="code-kw">NOT NULL</span>,
+  category      TEXT,
+  business_tag  TEXT,
+  note          TEXT,
+  created_at    TIMESTAMPTZ <span class="code-kw">DEFAULT NOW</span>()
+);
+<span class="code-kw">CREATE INDEX ON</span> finance_entries (phone);</code></pre>
+      </div>
+      <!-- META WEBHOOK -->
+      <div class="doc-section" id="meta-webhook">
+        <h2>Meta webhook setup</h2>
+        <p>In the Meta developer portal, go to your app → WhatsApp → Configuration.</p>
+        <ol>
+          <li>Set <strong>Webhook URL</strong> to <code>https://your-app.onrender.com/webhook</code></li>
+          <li>Set <strong>Verify token</strong> to the same value as your <code>VERIFY_TOKEN</code> env var</li>
+          <li>Subscribe to the <strong>messages</strong> webhook field</li>
+          <li>Add your phone number as a test recipient in the API Setup section</li>
+        </ol>
+        <div class="callout-warn callout">
+          <div class="callout-title">Permanent access token</div>
+          <p>The default access token from Meta expires in 24 hours. Generate a permanent token via the <strong>System User</strong> flow in Meta Business Manager. Use that token as <code>ACCESS_TOKEN</code>.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="templates">
+        <h2>Message Templates</h2>
+        <p>WhatsApp only allows free-form text messages while a <strong>24-hour customer-service window</strong> is open — which starts when someone messages Kael, and closes 24h after their last message. Two situations fall outside that window:</p>
+        <ol>
+          <li><strong>Long-term reminders.</strong> If you (the owner) haven't messaged Kael in over 24h when a reminder fires, plain text delivery fails.</li>
+          <li><strong>Messages to third-party contacts.</strong> When you ask Kael to message someone else (the <code>instant_message</code> intent), that contact has usually never messaged Kael at all — there's no window to begin with.</li>
+        </ol>
+        <p>To handle both, create an approved <strong>Message Template</strong> once, and Kael falls back to it automatically whenever Meta rejects a free-form message for this reason (error code <code>131047</code>).</p>
+        <h3>Create the template</h3>
+        <p>Meta Business Manager → WhatsApp Manager → Message Templates → Create template:</p>
+        <ul>
+          <li><strong>Category:</strong> Utility (not Marketing — Marketing templates cost more and have stricter opt-in rules)</li>
+          <li><strong>Name:</strong> anything, e.g. <code>kael_notification</code></li>
+          <li><strong>Language:</strong> Spanish (Argentina)</li>
+          <li><strong>Body:</strong> just <code>{{1}}</code> — a single variable that carries the full message text Kael would otherwise have sent as plain text</li>
+        </ul>
+        <p>Submit for review. Approval is usually a few minutes to a few hours. Once approved, set <code>WHATSAPP_TEMPLATE_NAME</code> (and <code>WHATSAPP_TEMPLATE_LANG</code> if you didn't use <code>es_AR</code>) in your environment — no code changes needed.</p>
+        <div class="callout-warn callout">
+          <div class="callout-title">Without a template configured</div>
+          <p>Kael still works normally for anything inside an open window. Outside it, reminders silently retry every minute (they'll never succeed until the window reopens), and third-party messages return a clear failure to the sender instead of pretending to succeed.</p>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <div class="doc-section" id="reminders">
+        <h2>Reminders</h2>
+        <p>Set a one-off reminder in plain English. Kael extracts the time and optional date, saves it with a full timezone-aware timestamp, and fires it via WhatsApp at the right moment.</p>
+        <h3>Example messages</h3>
+        <pre><code>Remind me to call the bank at 3 PM
+Remind me in 20 minutes to check the oven
+5th April is Ravi's interview, remind me at 9 AM on that day</code></pre>
+        <h3>How time is resolved</h3>
+        <ul>
+          <li>Relative times ("in 20 minutes") — the AI calculates the exact Argentina-local timestamp from the current time</li>
+          <li>Future dates with time ("5th April at 9 AM") — stored as a full TIMESTAMPTZ, fires once and is marked complete</li>
+          <li>Time only with no date ("at 3 PM") — defaults to today, rolls to tomorrow if the time has already passed</li>
+        </ul>
+        <div class="callout">
+          <div class="callout-title">Timezone</div>
+          <p>All times are Argentina local time (America/Argentina/Cordoba, UTC-3, no DST). The scheduler runs every minute and compares against the current local timestamp.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="routines">
+        <h2>Daily routines</h2>
+        <p>Routines repeat at the same time every day with no end date. They run at a fixed clock time (e.g. 9:00 AM every day) until you delete them.</p>
+        <p>For repeating alerts spaced by minutes or hours, see <a href="#interval-reminders">Interval reminders</a>.</p>
+        <pre><code>Remind me to drink water every day at 10 AM
+Set a daily reminder to check email at 9 AM</code></pre>
+        <p>To stop a routine, delete it by name: <em>"Delete drink water routine"</em></p>
+      </div>
+
+      <div class="doc-section" id="interval-reminders">
+        <h2>Interval reminders</h2>
+        <p>Repeat an alert every X minutes or hours within a set window. Useful for hydration reminders, medication, stretch breaks, or anything that needs nudging throughout the day.</p>
+        <h3>Example messages</h3>
+        <pre><code>Remind me every 30 minutes to drink water
+Every 1 hour remind me to stretch for the next 4 hours
+Remind me every 15 mins to check on the oven for 2 hours</code></pre>
+        <h3>How it works</h3>
+        <ul>
+          <li><strong>intervalMinutes</strong> — how often the alert fires. Minimum 5 minutes.</li>
+          <li><strong>durationHours</strong> — how long to keep repeating. Defaults to 8 hours if not specified.</li>
+          <li>Kael pre-schedules all alerts as individual rows in <code>personal_reminders</code>, so the existing scheduler picks them up automatically — no new cron job needed.</li>
+        </ul>
+        <h3>Viewing them</h3>
+        <pre><code>What are my reminders?</code></pre>
+        <p>Interval reminders appear in a separate group showing count remaining and next fire time per task.</p>
+        <h3>Cancelling them</h3>
+        <pre><code>Delete the drink water reminder
+Stop drink water intervals</code></pre>
+        <p>All pending alerts for that task are deleted in one shot — you do not need to delete them one by one.</p>
+        <div class="callout">
+          <div class="callout-title">Different from routines</div>
+          <p>Routines repeat at the same fixed time every day forever. Interval reminders repeat within a window (default 8 hours) and stop. Use routines for habits, interval reminders for tasks you want nudged throughout the day.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="events">
+        <h2>Birthdays &amp; events</h2>
+        <p>Special events are saved with a date and repeat every year. The year in the date is irrelevant after the first save — Kael only matches day and month.</p>
+        <pre><code>22nd May is Manu's birthday
+Save Simhadri's farewell on 3rd April</code></pre>
+        <p>Kael sends two alerts every year:</p>
+        <ul>
+          <li>Day before at 8:30 AM local time</li>
+          <li>The day itself at 8:30 AM local time</li>
+        </ul>
+      </div>
+
+      <div class="doc-section" id="contacts">
+        <h2>Contacts &amp; messaging</h2>
+        <p>Save a contact once. After that, address them by name in any instruction.</p>
+        <pre><code><span class="code-comment"># Save a contact</span>
+Save mom as 5493511234567
+Add Ravi to contacts, number 5493511234568
+
+<span class="code-comment"># Send a message by name</span>
+Tell mom I'll be 10 minutes late
+Message Ravi and say the meeting is at 7</code></pre>
+        <p>Phone numbers must include the country code with no <code>+</code> or spaces. Kael strips all non-digit characters automatically before saving.</p>
+      </div>
+
+      <div class="doc-section" id="search">
+        <h2>Web search</h2>
+        <p>Kael searches the web and returns a clean plain-text summary. No links, no markdown — just the answer.</p>
+        <pre><code>What's the score in the Argentina match today?
+What's the weather in Córdoba today?
+Latest news about OpenAI</code></pre>
+        <p>Primary provider is Tavily (1,000 req/month free). If Tavily is exhausted, Serper is used automatically (2,500 req lifetime free). You are alerted at 50, 10, and 0 remaining on each.</p>
+      </div>
+
+      <div class="doc-section" id="delete">
+        <h2>Deleting tasks</h2>
+        <p>Delete any reminder, routine, or event by describing it. You do not need to use the exact saved name.</p>
+        <pre><code>Delete the reminder to call the bank
+Delete drink water routine
+Remove Manu's birthday</code></pre>
+        <p>Kael searches reminders first, then routines, then events. The first match found is deleted. If nothing matches, it says so.</p>
+      </div>
+
+      <div class="doc-section" id="chat">
+        <h2>Conversational chat</h2>
+        <p>For anything that is not a task, Kael responds directly using the AI waterfall. Ask questions, request explanations, or just talk.</p>
+        <pre><code>What do you have saved for me?
+Explain machine learning simply
+Tell me a joke</code></pre>
+      </div>
+
+      <div class="doc-section" id="recurring">
+        <h2>Weekly &amp; monthly recurring reminders</h2>
+        <p>For reminders that repeat on a specific day of the week or a specific day of the month — use weekly or monthly recurring tasks. These are stored separately from daily routines and have their own scheduler.</p>
+        <h3>Weekly</h3>
+        <pre><code>Remind me to take out the trash every Tuesday at 8 PM
+Every Friday at 6 PM remind me to submit my timesheet</code></pre>
+        <h3>Monthly</h3>
+        <pre><code>Remind me to pay rent on the 1st of every month at 9 AM
+On the 15th of every month remind me to check bank statement</code></pre>
+        <div class="callout">
+          <div class="callout-title">End of month edge case</div>
+          <p>If you set a monthly task for the 31st and the current month has fewer days, it fires on the last day of that month instead of being skipped.</p>
+        </div>
+        <p>To stop a recurring task, delete it by name: <em>"Delete the pay rent reminder"</em></p>
+      </div>
+
+      <div class="doc-section" id="edit-task">
+        <h2>Edit &amp; undo</h2>
+        <p>Made a mistake on a reminder time? Just send a correction as a follow-up message. Kael uses conversation history to identify which reminder you mean and updates it in place — no delete and recreate needed.</p>
+        <pre><code><span class="code-comment"># First set a reminder</span>
+Remind me to buy eggs at 5 PM
+
+<span class="code-comment"># Immediately correct it</span>
+Actually make that 6 PM
+Change the buy eggs reminder to 7 PM</code></pre>
+        <div class="callout">
+          <div class="callout-title">Only works on pending reminders</div>
+          <p>Edit only targets one-off reminders that haven't fired yet. It does not edit daily routines, recurring tasks, or events. Use delete + recreate for those.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="memory">
+        <h2>Conversational memory</h2>
+        <p>Kael reads the last 8 messages in your conversation before processing each new one. This lets you ask natural follow-up questions without repeating context.</p>
+        <pre><code><span class="code-comment"># Ask a question</span>
+Who won the last Copa América?
+
+<span class="code-comment"># Follow up without repeating the topic</span>
+Who was the winning captain?
+Where was the final held?</code></pre>
+        <p>Memory is scoped strictly to your own phone number — other users' history is never mixed in.</p>
+      </div>
+
+      <div class="doc-section" id="media">
+        <h2>Media handling</h2>
+        <p>Kael only processes text messages. If you accidentally send a voice note, image, video, document, or sticker, she replies with a clear message instead of silently ignoring it.</p>
+        <pre><code><span class="code-comment"># Sending a voice note gets back:</span>
+I can only read text messages right now. I cannot process voice notes. Please type your request.</code></pre>
+      </div>
+
+      <div class="doc-section" id="snooze">
+        <h2>Snooze a reminder</h2>
+        <p>Postpone a reminder that already fired, or push one back before it fires — just say how long.</p>
+        <pre><code><span class="code-comment"># You:</span>
+Snooze that 10 minutes
+<span class="code-comment"># Kael:</span>
+Snoozed "drink water" — I'll remind you again at 9:52 AM.</code></pre>
+        <p>If you name the task ("postpone the medicine reminder half an hour"), Kael matches it by name; otherwise it snoozes the most recent one.</p>
+      </div>
+
+      <div class="doc-section" id="notes">
+        <h2>Notes</h2>
+        <p>Jot down anything you don't want to lose track of, and search it back later.</p>
+        <pre><code><span class="code-comment"># You:</span>
+Note that the wifi password is beluz2026
+<span class="code-comment"># Kael:</span>
+Note saved.
+
+<span class="code-comment"># You:</span>
+What did I note about the wifi?
+<span class="code-comment"># Kael:</span>
+Notes:
+
+- wifi password is beluz2026</code></pre>
+      </div>
+
+      <div class="doc-section" id="lists">
+        <h2>Lists</h2>
+        <p>Named lists — shopping, todo, or anything else. Kael infers the list name from what you say.</p>
+        <pre><code><span class="code-comment"># You:</span>
+Add milk to the shopping list
+<span class="code-comment"># Kael:</span>
+Added "milk" to your shopping list.
+
+<span class="code-comment"># You:</span>
+What's on my shopping list?
+<span class="code-comment"># Kael:</span>
+Shopping list:
+
+- milk
+
+<span class="code-comment"># You:</span>
+I bought the milk
+<span class="code-comment"># Kael:</span>
+Removed "milk" from your shopping list.</code></pre>
+        <p>Ask "what's on my lists?" with no list named to get a summary of every list and its pending count.</p>
+      </div>
+
+      <div class="doc-section" id="finance">
+        <h2>Finance tracking</h2>
+        <p>Log income and expenses in plain language, optionally tagged to a specific business (e.g. Beluz vs. Dulce Meel), and ask for a balance any time.</p>
+        <pre><code><span class="code-comment"># You:</span>
+Spent 5000 on groceries
+<span class="code-comment"># Kael:</span>
+Logged expense of $5000 — groceries.
+
+<span class="code-comment"># You:</span>
+Got paid 20000 from the Beluz client Elena
+<span class="code-comment"># Kael:</span>
+Logged income of $20000 — client payment (Beluz).
+
+<span class="code-comment"># You:</span>
+What's my balance this month?
+<span class="code-comment"># Kael:</span>
+Last 30 days:
+
+Income: $20000.00
+Expenses: $5000.00
+Balance: $15000.00
+
+Expenses by category:
+- groceries: $5000.00</code></pre>
+        <p>Ask "how much did I spend on Dulce Meel today?" to filter by business tag and period in one go.</p>
+      </div>
+
+      <div class="doc-section" id="daily-summary">
+        <h2>Daily summary</h2>
+        <p>Every morning at 07:00 (Argentina time), Kael proactively messages you — no need to ask. It rounds up today's reminders, daily routines, recurring tasks and events due today, and how many pending items are on your lists.</p>
+        <p>This runs even if the server was asleep at 07:00 — it's also checked on every <code>/api/tick</code> call and simply skips itself once it's already sent for the day.</p>
+      </div>
+
+      <!-- DEPLOYMENT -->
+      <div class="doc-section" id="render">
+        <h2>Deploy to Render</h2>
+        <ol>
+          <li>Push your repo (with a filled <code>.env.example</code> but no <code>.env</code>) to GitHub</li>
+          <li>In Render, create a new <strong>Web Service</strong> → connect your GitHub repo</li>
+          <li>Set <strong>Build command</strong>: <code>npm install</code></li>
+          <li>Set <strong>Start command</strong>: <code>npm start</code></li>
+          <li>Add all environment variables in the Render <strong>Environment</strong> tab</li>
+          <li>Deploy. Your URL will be <code>https://your-app.onrender.com</code></li>
+        </ol>
+        <div class="callout">
+          <div class="callout-title">Free tier sleep</div>
+          <p>Render free instances sleep after 15 minutes of inactivity. Set up a keep-alive ping — see below.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="keepalive">
+        <h2>Keep-alive &amp; uptime monitoring</h2>
+        <p>Render free instances sleep after 15 minutes of inactivity. When sleeping, the in-process cron jobs stop ticking. The solution is two layers: an external cron trigger that runs dispatch jobs on-demand, and UptimeRobot for downtime alerting.</p>
+
+        <h3>Step 1 — External cron trigger (cron-job.org)</h3>
+        <p>This is the primary reliability mechanism. <a href="https://cron-job.org" target="_blank">cron-job.org</a> (free) calls <code>/api/tick</code> every minute. This both keeps the service awake and runs the reminder/routine dispatch logic — so reminders fire even after a cold restart.</p>
+        <ol>
+          <li>Create a free account at <a href="https://cron-job.org" target="_blank">cron-job.org</a></li>
+          <li>Add a new cronjob — method: <strong>GET</strong></li>
+          <li>URL: <code>https://your-app.onrender.com/api/tick</code></li>
+          <li>Custom header: <code>x-cron-secret: YOUR_CRON_SECRET</code></li>
+          <li>Schedule: every <strong>1 minute</strong></li>
+        </ol>
+        <p>Set <code>CRON_SECRET</code> and <code>PUBLIC_URL</code> in your Render environment variables. The server also self-pings <code>/api/tick</code> every 4 minutes as a secondary keep-alive.</p>
+
+        <h3>Step 2 — Downtime alerting (UptimeRobot)</h3>
+        <p>Use <a href="https://uptimerobot.com" target="_blank">UptimeRobot</a> (free) for mobile push alerts if your bot goes down.</p>
+        <ol>
+          <li>Add a <strong>New Monitor</strong> of type <strong>HTTP(s)</strong></li>
+          <li>URL: <code>https://your-app.onrender.com/api/ping</code></li>
+          <li>Interval: <strong>5 minutes</strong></li>
+        </ol>
+        <p>The <code>/api/ping</code> endpoint returns HTTP 200 when healthy and HTTP 500 if Supabase is unreachable. Keep this separate from <code>/api/tick</code> — it is a pure health check, not a job trigger.</p>
+      </div>
+
+      <div class="doc-section" id="testing">
+        <h2>Testing locally</h2>
+        <p>The test suite runs against your real Supabase instance, inserts test data, verifies it, and cleans up after every run. No real WhatsApp messages are sent.</p>
+        <pre><code><span class="code-comment"># Run the full suite</span>
+node test.js
+
+<span class="code-comment"># Run specific suites only</span>
+node test.js --suite formatter
+node test.js --suite formatter,memory,recurring</code></pre>
+        <p>Available suite keys: <code>connectivity</code>, <code>builddate</code>, <code>ai</code>, <code>reminders</code>, <code>routines</code>, <code>events</code>, <code>contacts</code>, <code>delete</code>, <code>interval</code>, <code>scheduler</code>, <code>usage</code>, <code>routes</code>, <code>memory</code>, <code>missingtime</code>, <code>edit</code>, <code>formatter</code>, <code>vaguedefaults</code>, <code>recurring</code>, <code>media</code>.</p>
+        <div class="callout-warn callout">
+          <div class="callout-title">AI-dependent suites</div>
+          <p>Suites that call the AI waterfall (<code>ai</code>, <code>memory</code>, <code>missingtime</code>, <code>edit</code>, <code>vaguedefaults</code>, <code>recurring</code>) consume real quota and are non-deterministic. If quota is exhausted mid-run, remaining AI cases are skipped automatically. Run <code>formatter</code>, <code>media</code>, and <code>connectivity</code> for fast deterministic checks.</p>
+        </div>
+      </div>
+
+      <!-- REFERENCE -->
+      <div class="doc-section" id="ai-waterfall">
+        <h2>AI waterfall</h2>
+        <p>Every message goes through a 4-tier AI chain. If a tier is exhausted or fails, the next tier is tried automatically.</p>
+        <table class="doc-table">
+          <thead><tr><th>Tier</th><th>Model</th><th>Daily limit</th><th>Cost</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Gemini 3 Flash Preview</td><td>~20 req/day (shared)</td><td>Free</td></tr>
+            <tr><td>2</td><td>Gemini 2.5 Flash</td><td>~20 req/day (shared with Tier 1)</td><td>Free</td></tr>
+            <tr><td>3</td><td>Groq Llama 3.3 70B</td><td>300 req/day (safety cap)</td><td>Free</td></tr>
+            <tr><td>4</td><td>OpenRouter GPT-4o-mini</td><td>50 req/day (safety cap)</td><td>~$5 credit</td></tr>
+          </tbody>
+        </table>
+        <p>The model name and remaining quota is appended to every bot response so you always know which tier was used. Conversation history (last 8 turns) is injected into the system prompt on every call to support follow-up questions.</p>
+      </div>
+
+      <div class="doc-section" id="api-endpoints">
+        <h2>API endpoints</h2>
+        <table class="doc-table">
+          <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>GET</code></td><td><code>/</code></td><td>Landing page</td></tr>
+            <tr><td><code>GET</code></td><td><code>/documentation</code></td><td>This documentation page</td></tr>
+            <tr><td><code>GET</code></td><td><code>/status</code></td><td>Kael — live system dashboard</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/ping</code></td><td>Health check for UptimeRobot. Returns <code>{status, latency_ms, timestamp}</code>. HTTP 500 if Supabase unreachable.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/tick</code> (header <code>x-cron-secret</code>)</td><td>External cron trigger — runs reminder, routine, and recurring task dispatch. Protected by <code>CRON_SECRET</code>. Called by cron-job.org every minute.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/status</code></td><td>Dashboard data — usage stats, uptime, limits, jobs, version</td></tr>
+            <tr><td><code>GET</code></td><td><code>/webhook</code></td><td>Meta webhook verification handshake</td></tr>
+            <tr><td><code>POST</code></td><td><code>/webhook</code></td><td>Incoming WhatsApp messages — signature-verified, rate-limited, main message handler</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="doc-section" id="limits">
+        <h2>Usage limits</h2>
+        <table class="doc-table">
+          <thead><tr><th>Service</th><th>Limit</th><th>Reset</th></tr></thead>
+          <tbody>
+            <tr><td>Gemini (Tier 1 + 2 combined)</td><td>40 req/day</td><td>Midnight local time (Argentina)</td></tr>
+            <tr><td>Groq</td><td>300 req/day (safety cap)</td><td>Midnight UTC</td></tr>
+            <tr><td>OpenRouter</td><td>50 req/day (safety cap)</td><td>Midnight UTC</td></tr>
+            <tr><td>Tavily</td><td>1,000 req/month</td><td>Monthly</td></tr>
+            <tr><td>Serper</td><td>2,500 req lifetime</td><td>Never resets</td></tr>
+          </tbody>
+        </table>
+        <p>Kael alerts you on WhatsApp when any search service hits 50, 10, or 0 remaining credits. Live usage is visible on the <a href="/status">status dashboard</a>.</p>
+      </div>
+
+      <div class="doc-section" id="troubleshooting">
+        <h2>Troubleshooting</h2>
+        <h3>Server won't start — "supabaseUrl is required"</h3>
+        <p>You are running the server from inside the <code>src/</code> directory. <code>dotenv</code> looks for <code>.env</code> relative to the working directory, not the file. Always run from the project root:</p>
+        <pre><code>npm run dev       <span class="code-comment"># correct</span>
+cd src && node server.js   <span class="code-comment"># wrong — .env not found</span></code></pre>
+
+        <h3>Cannot find module 'server.js'</h3>
+        <p>Your <code>package.json</code> scripts point to <code>src/server.js</code>. Don't run <code>node server.js</code> from the root — use <code>npm start</code> or <code>npm run dev</code>.</p>
+
+        <h3>"Contact not found in address book"</h3>
+        <p>The contact does not exist in the <code>contacts</code> table. Save them first: <em>"Save mom as 5493511234567"</em></p>
+
+        <h3>Reminders firing on wrong date</h3>
+        <p>Make sure you specify both a date and a time. If you only specify a time, Kael defaults to today (rolling to tomorrow if passed). For future dates, say the date explicitly.</p>
+
+        <h3>Dashboard shows no data</h3>
+        <p>The <code>api_usage</code> table populates as you use the bot. In v1.1.1+, a record is auto-created every day the bot is online (even if idle) to ensure your 90-day history grid remains continuous.</p>
+      </div>
+
+      <div class="doc-nav">
+        <div></div>
+        <a href="/status" style="text-align:right">
+          <span class="doc-nav-dir">Next</span>
+          <span class="doc-nav-title">System status →</span>
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Active sidebar link on scroll
+    const sections = document.querySelectorAll('.doc-section[id]');
+    const links = document.querySelectorAll('.sidebar-links a');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-links a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -80% 0px' });
+
+    sections.forEach(s => io.observe(s));
+  </script>
+</body>
+</html>
